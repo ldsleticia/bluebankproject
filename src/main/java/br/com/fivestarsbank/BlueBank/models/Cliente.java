@@ -1,14 +1,16 @@
 package br.com.fivestarsbank.BlueBank.models;
 
 import java.io.Serializable;
-
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Objects;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.Length;
 
 @Entity
@@ -29,19 +31,21 @@ public class Cliente  implements Serializable {
     private String nome;
 
     @NotNull
+    @Column(unique = true)
     @Length(min = 11, max = 14, message = "CPF = 11, CNPJ = 14")
     private String cpf_cnpj;
 
     @NotNull
+    @Column(unique = true)
     @Length(min = 3, max = 14, message = "RG = 10, IE = 14")
     private String rg_ie;
 
-    private LocalDateTime data_nascimento;
+    private LocalDate data_nascimento;
     public Cliente() {
 
     }
 
-    public Cliente(String senha,String nome, String cpf_cnpj, String rg_ie, LocalDateTime data_nascimento) {
+    public Cliente(String senha,String nome, String cpf_cnpj, String rg_ie, LocalDate data_nascimento) {
         this.senha = senha;
         this.nome = nome;
         this.cpf_cnpj = cpf_cnpj;
@@ -49,7 +53,6 @@ public class Cliente  implements Serializable {
         this.data_nascimento = data_nascimento;
     }
 
-    //Getters e Setters
     public Integer getId() {
         return id;
     }
@@ -80,13 +83,13 @@ public class Cliente  implements Serializable {
     public void setRg_ie(String rg_ie) {
         this.rg_ie = rg_ie;
     }
-    public LocalDateTime getData_nascimento() {
+    public LocalDate getData_nascimento() {
         return data_nascimento;
     }
-    public void setData_nascimento(LocalDateTime data_nascimento) {
+    public void setData_nascimento(LocalDate data_nascimento) {
         this.data_nascimento = data_nascimento;
     }
-
+    //HashCode e Equals
     @Override
     public int hashCode() {
         return Objects.hash(cpf_cnpj, id);

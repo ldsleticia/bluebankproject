@@ -3,12 +3,16 @@ package br.com.fivestarsbank.BlueBank.models;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
 public class Movimentacao implements Serializable {
+
     private static final long serialVersionUID = -5368117678079469752L;
 
     @Id
@@ -16,6 +20,7 @@ public class Movimentacao implements Serializable {
     private Integer id;
 
     @NotNull
+    @Length( max = 6, message = "Tipo da transação com máximo 6 caracteres")
     private String tipo_transacao;
 
     @NotNull
@@ -28,28 +33,54 @@ public class Movimentacao implements Serializable {
     @Max(value = 1, message = "C para crédito, D para Débito")
     private char credito_debito;
 
-    @NotNull
+    @Length( max = 20, message = "Descrição com máximo 20 caracteres")
     private String descricao;
 
     @NotNull
     @ManyToOne
-    private Conta numero_conta;
+    private Conta conta;
 
     public Movimentacao (){
 
     }
 
-    public Movimentacao(String tipo_transacao, LocalDateTime data_transacao, Double valor, char credito_debito, String descricao) {
+
+    public Movimentacao(@NotNull String tipo_transacao, @NotNull LocalDateTime data_transacao, @NotNull Double valor,
+                        @NotNull @Max(value = 1, message = "C para crédito, D para Débito") char credito_debito,
+                        @NotNull String descricao, @NotNull Conta conta) {
+        super();
         this.tipo_transacao = tipo_transacao;
         this.data_transacao = data_transacao;
         this.valor = valor;
         this.credito_debito = credito_debito;
         this.descricao = descricao;
+        this.conta = conta;
     }
+
 
     public String getTipo_transacao() {
         return tipo_transacao;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+
+    public Conta getConta() {
+        return conta;
+    }
+
+
+    public void setConta(Conta conta) {
+        this.conta = conta;
+    }
+
 
     public void setTipo_transacao(String tipo_transacao) {
         this.tipo_transacao = tipo_transacao;
@@ -87,16 +118,23 @@ public class Movimentacao implements Serializable {
         this.descricao = descricao;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Movimentacao that = (Movimentacao) o;
-        return credito_debito == that.credito_debito && tipo_transacao.equals(that.tipo_transacao) && data_transacao.equals(that.data_transacao) && valor.equals(that.valor) && descricao.equals(that.descricao);
-    }
 
     @Override
     public int hashCode() {
-        return Objects.hash(tipo_transacao, data_transacao, valor, credito_debito, descricao);
+        return Objects.hash(id);
     }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Movimentacao other = (Movimentacao) obj;
+        return Objects.equals(id, other.id);
+    }
+
 }

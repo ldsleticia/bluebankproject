@@ -2,6 +2,7 @@ package br.com.fivestarsbank.BlueBank.models;
 
 import java.io.Serializable;
 import java.util.Objects;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -72,6 +73,8 @@ public class Endereco implements Serializable {
         return Objects.equals(id, other.id);
     }
 
+
+
     public Endereco(
             @NotNull @Length(min = 3, max = 120, message = "Logradouro com no máximo 120 caracteres") String logradouro,
             @Length(max = 50, message = "Complemento com no máximo 50 caracteres") String complemento,
@@ -96,6 +99,7 @@ public class Endereco implements Serializable {
         return id;
     }
 
+
     public Cliente getcliente() {
         return cliente;
     }
@@ -108,29 +112,36 @@ public class Endereco implements Serializable {
         this.id = id;
     }
 
+
     public String getLogradouro() {
         return logradouro;
     }
+
 
     public void setLogradouro(String logradouro) {
         this.logradouro = logradouro;
     }
 
+
     public String getComplemento() {
         return complemento;
     }
+
 
     public void setComplemento(String complemento) {
         this.complemento = complemento;
     }
 
+
     public String getBairro() {
         return bairro;
     }
 
+
     public void setBairro(String bairro) {
         this.bairro = bairro;
     }
+
 
     public String getCep() {
         return cep;
@@ -144,9 +155,11 @@ public class Endereco implements Serializable {
         return cidade;
     }
 
+
     public void setCidade(String cidade) {
         this.cidade = cidade;
     }
+
 
     public String getEstado() {
         return estado;
@@ -156,11 +169,14 @@ public class Endereco implements Serializable {
         this.estado = estado;
     }
 
+
     public String getPais() {
         return pais;
     }
+
 
     public void setPais(String pais) {
         this.pais = pais;
     }
 }
+
