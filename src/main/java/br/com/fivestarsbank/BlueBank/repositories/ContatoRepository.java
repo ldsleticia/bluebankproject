@@ -1,7 +1,11 @@
 package br.com.fivestarsbank.BlueBank.repositories;
 
-import br.com.fivestarsbank.BlueBank.models.Contato;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface ContatoRepository extends JpaRepository<Contato, Integer> {
+import br.com.fivestarsbank.BlueBank.models.Contato;
+
+@Repository
+public interface ContatoRepository extends JpaRepository<Contato, Long> {
+
 }

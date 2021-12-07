@@ -12,171 +12,162 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import br.com.fivestarsbank.BlueBank.models.enums.StatusEnderecoContato;
+
 @Entity
 public class Endereco implements Serializable {
-    private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @NotNull
-    @Length(min = 3, max = 120, message = "Logradouro com no máximo 120 caracteres")
-    private String logradouro;
+	@NotNull
+	@Length(max = 120)
+	private String logradouro;
 
-    @Length(max = 50, message = "Complemento com no máximo 50 caracteres")
-    private String complemento;
+	@Length(max = 50)
+	private String complemento;
 
-    @NotNull
-    @Length(min = 3, max = 30, message = "Bairro com no máximo 30 caracteres")
-    private String bairro;
+	@NotNull
+	@Length(max = 30)
+	private String bairro;
 
-    @NotNull
-    @Length(min = 8, max = 9, message = "CEP com 8 caracteres")
-    private String cep;
+	@NotNull
+	@Length(max = 8)
+	private String cep;
 
-    @NotNull
-    @Length(min = 3, max = 50, message = "Cidade com no máximo 50 caracteres")
-    private String cidade;
+	@NotNull
+	@Length(max = 50)
+	private String cidade;
 
-    @NotNull
-    @Length(min = 2, max = 2, message = "Estado com no máximo 2 caracteres")
-    private String estado;
+	@NotNull
+	@Length(max = 2)
+	private String estado;
 
-    @NotNull
-    @Length(min = 3, max = 30, message = "Pais com no máximo 30 caracteres")
-    private String pais;
+	@NotNull
+	@Length(max = 30)
+	private String pais;
 
-    @NotNull
-    @ManyToOne
-    private Cliente cliente;
+	private Integer statusEnd;
 
-    public Endereco() {
+	@JsonIgnore
+	@ManyToOne
+	private Cliente cliente;
 
-    }
+	public Endereco() {
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
+	public Endereco(String logradouro, String complemento, String bairro, String cep, String cidade, String estado,
+			String pais, StatusEnderecoContato status) {
+		this.logradouro = logradouro;
+		this.complemento = complemento;
+		this.bairro = bairro;
+		this.cep = cep;
+		this.cidade = cidade;
+		this.estado = estado;
+		this.pais = pais;
+		this.statusEnd = status.getCod();
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Endereco other = (Endereco) obj;
-        return Objects.equals(id, other.id);
-    }
+	public Long getId() {
+		return id;
+	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
 
+	public String getLogradouro() {
+		return logradouro;
+	}
 
-    public Endereco(
-            @NotNull @Length(min = 3, max = 120, message = "Logradouro com no máximo 120 caracteres") String logradouro,
-            @Length(max = 50, message = "Complemento com no máximo 50 caracteres") String complemento,
-            @NotNull @Length(min = 3, max = 30, message = "Bairro com no máximo 30 caracteres") String bairro,
-            @NotNull @Length(min = 8, max = 9, message = "CEP com 8 caracteres") String cep,
-            @NotNull @Length(min = 3, max = 50, message = "Cidade com no máximo 50 caracteres") String cidade,
-            @NotNull @Length(min = 2, max = 2, message = "Estado com no máximo 2 caracteres") String estado,
-            @NotNull @Length(min = 3, max = 30, message = "Pais com no máximo 30 caracteres") String pais,
-            @NotNull Cliente cliente) {
-        super();
-        this.logradouro = logradouro;
-        this.complemento = complemento;
-        this.bairro = bairro;
-        this.cep = cep;
-        this.cidade = cidade;
-        this.estado = estado;
-        this.pais = pais;
-        this.cliente = cliente;
-    }
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
+	}
 
-    public Integer getId() {
-        return id;
-    }
+	public String getComplemento() {
+		return complemento;
+	}
 
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
+	}
 
-    public Cliente getcliente() {
-        return cliente;
-    }
+	public String getBairro() {
+		return bairro;
+	}
 
-    public void setcliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public String getCep() {
+		return cep;
+	}
 
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
 
-    public String getLogradouro() {
-        return logradouro;
-    }
+	public String getCidade() {
+		return cidade;
+	}
 
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
 
-    public void setLogradouro(String logradouro) {
-        this.logradouro = logradouro;
-    }
+	public String getEstado() {
+		return estado;
+	}
 
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
 
-    public String getComplemento() {
-        return complemento;
-    }
+	public String getPais() {
+		return pais;
+	}
 
+	public void setPais(String pais) {
+		this.pais = pais;
+	}
 
-    public void setComplemento(String complemento) {
-        this.complemento = complemento;
-    }
+	public Cliente getCliente() {
+		return cliente;
+	}
 
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
 
-    public String getBairro() {
-        return bairro;
-    }
+	public StatusEnderecoContato getStatusEnd() {
+		return StatusEnderecoContato.toEnum(statusEnd);
+	}
 
+	public void setStatusEnd(StatusEnderecoContato statusEnd) {
+		this.statusEnd = statusEnd.getCod();
+	}
 
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Endereco other = (Endereco) obj;
+		return Objects.equals(id, other.id);
+	}
 
-    public String getCep() {
-        return cep;
-    }
-
-    public void setCep(String cep) {
-        this.cep = cep;
-    }
-
-    public String getCidade() {
-        return cidade;
-    }
-
-
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
-
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-
-    public String getPais() {
-        return pais;
-    }
-
-
-    public void setPais(String pais) {
-        this.pais = pais;
-    }
 }
-

@@ -3,7 +3,6 @@ package br.com.fivestarsbank.BlueBank.models;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,123 +12,122 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import br.com.fivestarsbank.BlueBank.models.enums.StatusEnderecoContato;
 
 @Entity
 public class Contato implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    //inicialização da tabela contato
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @NotNull
-    @Length(min = 8, max = 20 , message = "Telefone entre 8 a 20 caracteres.")
-    private String telefone;
+	@NotNull
+	@Length(max = 11)
+	private String telefone;
 
-    private String contato_tel;
+	@NotNull
+	@Length(max = 10)
+	private String descricao;
 
-    @NotNull
-    @Length(max = 10, message = "Descrição na máximo 20 caracteres.")
-    private String descricao;
+	@Length(max = 25)
+	private String contato_tel;
 
-    @NotNull
-    @Column(unique = true)
-    @Length(min = 10 , max = 50, message = "E-mail com máximo 50 caracteres.")
-    private String email;
+	@NotNull
+	@Length(max = 50)
+	private String email;
 
-    // relacionamento com a tabela de cliente
-    @NotNull
-    @ManyToOne
-    private Cliente cliente;
+	private Integer statusContato;
 
-    //
-    public Contato() {
+	@JsonIgnore
+	@ManyToOne
+	private Cliente cliente;
 
-    }
+	public Contato() {
+	}
 
-    // Construtores utilizando campos da clase contato
-    public Contato(@NotNull @Length(min = 8, max = 20, message = "Telefone entre 8 a 20 caracteres.") String telefone,
-                   String contato_tel, @NotNull @Length(max = 10, message = "Descrição na máximo 20 caracteres.") String descricao,
-                   @NotNull @Length(min = 10, max = 50, message = "E-mail com máximo 50 caracteres.") String email,
-                   @NotNull Cliente cliente) {
-        super();
-        this.telefone = telefone;
-        this.contato_tel = contato_tel;
-        this.descricao = descricao;
-        this.email = email;
-        this.cliente = cliente;
-    }
+	public Contato(String telefone, String contato_tel, String descricao, String email, StatusEnderecoContato status) {
+		this.telefone = telefone;
+		this.contato_tel = contato_tel;
+		this.descricao = descricao;
+		this.email = email;
+		this.statusContato = status.getCod();
+	}
 
+	public Long getId() {
+		return id;
+	}
 
-    //Getters e Setters
-    public Integer getId() {
-        return id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public String getTelefone() {
+		return telefone;
+	}
 
-    public String getTelefone() {
-        return telefone;
-    }
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
+	public String getDescricao() {
+		return descricao;
+	}
 
-    public String getContato_tel() {
-        return contato_tel;
-    }
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
 
-    public void setContato_tel(String contato_tel) {
-        this.contato_tel = contato_tel;
-    }
+	public String getContato_tel() {
+		return contato_tel;
+	}
 
-    public String getDescricao() {
-        return descricao;
-    }
+	public void setContato_tel(String contato_tel) {
+		this.contato_tel = contato_tel;
+	}
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public StatusEnderecoContato getStatusContato() {
+		return StatusEnderecoContato.toEnum(statusContato);
+	}
 
-    public Cliente getCliente() {
-        return cliente;
-    }
+	public void setStatusContato(StatusEnderecoContato statusContato) {
+		this.statusContato = statusContato.getCod();
+	}
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
+	public Cliente getCliente() {
+		return cliente;
+	}
 
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
 
-    // hashCode e equals
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Contato other = (Contato) obj;
-        return Objects.equals(id, other.id);
-    }
-
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Contato other = (Contato) obj;
+		return Objects.equals(id, other.id);
+	}
 
 }

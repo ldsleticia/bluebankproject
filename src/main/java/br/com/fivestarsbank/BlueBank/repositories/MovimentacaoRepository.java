@@ -1,7 +1,11 @@
 package br.com.fivestarsbank.BlueBank.repositories;
 
-import br.com.fivestarsbank.BlueBank.models.Movimentacao;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface MovimentacaoRepository extends JpaRepository<Movimentacao, Integer> {
+import br.com.fivestarsbank.BlueBank.models.Movimentacao;
+
+@Repository
+public interface MovimentacaoRepository extends JpaRepository<Movimentacao, Long> {
+
 }
